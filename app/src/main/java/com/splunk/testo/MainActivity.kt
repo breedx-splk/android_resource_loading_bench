@@ -47,6 +47,8 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(modifier: Modifier = Modifier) {
     var resourcesText by remember { mutableStateOf("") }
     var classesText by remember { mutableStateOf("") }
+    var isResourcesLoading by remember { mutableStateOf(false) }
+    var isClassesLoading by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
     Column(
@@ -55,12 +57,15 @@ fun MainScreen(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
     ) {
         Button(
+            enabled = !isResourcesLoading,
             onClick = {
                 coroutineScope.launch {
+                    isResourcesLoading = true
                     val result = withContext(Dispatchers.Default) {
                         ResourcesLoaderBench().load()
                     }
                     resourcesText = result.toString()
+                    isResourcesLoading = false
                 }
             },
             modifier = Modifier.sizeIn(minWidth = 204.dp, minHeight = 82.dp)
@@ -73,12 +78,15 @@ fun MainScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.sizeIn(minWidth = 204.dp)
         )
         Button(
+            enabled = !isClassesLoading,
             onClick = {
                 coroutineScope.launch {
+                    isClassesLoading = true
                     val result = withContext(Dispatchers.Default) {
                         ClassesLoaderBench().load()
                     }
                     classesText = result.toString()
+                    isClassesLoading = false
                 }
             },
             modifier = Modifier.sizeIn(minWidth = 204.dp, minHeight = 82.dp)
