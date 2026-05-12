@@ -44,4 +44,5 @@ See caveats about this below...
 * Speculation: it's possible that the parsing and creation of Properties instances is more expensive
   than necessary. Simply reading a text value instead of a property value might be faster. 
   Feel free to test this theory.
-* Might be interesting to try with 10x the files?
+* Might be interesting to try with 10x the files? I'm not convinced the number files impacts
+  the loading all that much...so that 1 file or 100 files are even close to the same time?
