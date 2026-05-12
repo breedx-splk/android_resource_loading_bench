@@ -73,7 +73,14 @@ fun MainScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.sizeIn(minWidth = 204.dp)
         )
         Button(
-            onClick = {},
+            onClick = {
+                coroutineScope.launch {
+                    val result = withContext(Dispatchers.Default) {
+                        ClassesLoaderBench().load()
+                    }
+                    classesText = result.toString()
+                }
+            },
             modifier = Modifier.sizeIn(minWidth = 204.dp, minHeight = 82.dp)
         ) {
             Text("load classes", fontSize = 27.sp)
