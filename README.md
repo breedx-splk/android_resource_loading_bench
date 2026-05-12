@@ -2,7 +2,7 @@
 
 A quick and dirty tool for comparing various methods of resource loading on Android.
 
-<img width="319" height="670" alt="image" src="https://github.com/user-attachments/assets/e13ee7a1-1e94-4330-99d7-b8b8e63c06a2" />
+<img width="314" height="670" alt="image" src="https://github.com/user-attachments/assets/9308a6cc-4dbe-468c-8b96-27f62c77a90c" />
 
 ## what's it do?
 
