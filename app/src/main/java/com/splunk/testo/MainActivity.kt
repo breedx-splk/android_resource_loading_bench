@@ -105,7 +105,10 @@ fun MainScreen(modifier: Modifier = Modifier) {
                     isClassesLoading = true
                     try {
                         val result = withContext(Dispatchers.Default) {
-                            ClassesLoaderBench().load()
+                            ClassesLoaderBench(
+                                packageName = "com.splunk.testo.versions",
+                                num = 500
+                            ).load()
                         }
                         classesText = result.toString()
                     } catch (t: Throwable) {

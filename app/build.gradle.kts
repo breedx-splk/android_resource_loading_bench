@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":version-info-classes"))
     implementation(project(":version-info-resources"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
