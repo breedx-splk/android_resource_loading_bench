@@ -10,9 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +41,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
+    var resourcesText by remember { mutableStateOf("") }
+    var classesText by remember { mutableStateOf("") }
+
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,12 +55,22 @@ fun MainScreen(modifier: Modifier = Modifier) {
         ) {
             Text("load resources", fontSize = 27.sp)
         }
+        OutlinedTextField(
+            value = resourcesText,
+            onValueChange = { resourcesText = it },
+            modifier = Modifier.sizeIn(minWidth = 204.dp)
+        )
         Button(
             onClick = {},
             modifier = Modifier.sizeIn(minWidth = 204.dp, minHeight = 82.dp)
         ) {
             Text("load classes", fontSize = 27.sp)
         }
+        OutlinedTextField(
+            value = classesText,
+            onValueChange = { classesText = it },
+            modifier = Modifier.sizeIn(minWidth = 204.dp)
+        )
     }
 }
 
