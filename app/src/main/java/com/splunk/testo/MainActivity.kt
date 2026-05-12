@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
 import com.splunk.testo.ui.theme.AndroidResourceBenchTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +47,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(modifier: Modifier = Modifier) {
     var resourcesText by remember { mutableStateOf("") }
     var classesText by remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -50,7 +55,14 @@ fun MainScreen(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
     ) {
         Button(
-            onClick = {},
+            onClick = {
+                coroutineScope.launch {
+                    val result = withContext(Dispatchers.Default) {
+                        ResourcesLoaderBench().load()
+                    }
+                    resourcesText = result.toString()
+                }
+            },
             modifier = Modifier.sizeIn(minWidth = 204.dp, minHeight = 82.dp)
         ) {
             Text("load resources", fontSize = 27.sp)
