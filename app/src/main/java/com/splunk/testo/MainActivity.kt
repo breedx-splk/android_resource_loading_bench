@@ -82,18 +82,10 @@ fun MainScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = 32.dp),
+            .padding(top = 48.dp, bottom = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        if (logoBitmap != null) {
-            Image(
-                bitmap = logoBitmap,
-                contentDescription = "App logo",
-                modifier = Modifier.sizeIn(maxWidth = 160.dp, maxHeight = 160.dp)
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-        }
         Button(
             enabled = !isResourcesLoading,
             onClick = {
@@ -150,6 +142,14 @@ fun MainScreen(modifier: Modifier = Modifier) {
             onValueChange = { classesText = it },
             modifier = Modifier.sizeIn(minWidth = 204.dp)
         )
+        Spacer(modifier = Modifier.weight(1f))
+        if (logoBitmap != null) {
+            Image(
+                bitmap = logoBitmap,
+                contentDescription = "App logo",
+                modifier = Modifier.sizeIn(maxWidth = 160.dp, maxHeight = 160.dp)
+            )
+        }
     }
 }
 
