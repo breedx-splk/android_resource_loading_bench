@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -98,6 +100,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
             onValueChange = { resourcesText = it },
             modifier = Modifier.sizeIn(minWidth = 204.dp)
         )
+        Spacer(modifier = Modifier.height(20.dp))
         Button(
             enabled = !isClassesLoading,
             onClick = {
