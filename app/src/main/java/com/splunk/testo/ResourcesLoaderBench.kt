@@ -1,6 +1,7 @@
 package com.splunk.testo
 
 import android.os.SystemClock
+import com.splunk.testo.resources.VersionInfoResourceAnchor
 import java.util.Properties
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.nanoseconds
@@ -15,7 +16,7 @@ class ResourcesLoaderBench(private val num: Int) {
             val resourceName = "/version_info_$suffix.properties"
             val expectedVersion = "1.$suffix.0"
             val properties = Properties()
-            val inputStream = checkNotNull(javaClass.getResourceAsStream(resourceName)) {
+            val inputStream = checkNotNull(VersionInfoResourceAnchor::class.java.getResourceAsStream(resourceName)) {
                 "Missing resource: $resourceName"
             }
 

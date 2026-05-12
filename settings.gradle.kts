@@ -24,4 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidResourceBench"
 include(":app")
+include(":version-info-resources")
  

@@ -79,7 +79,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                     isResourcesLoading = true
                     try {
                         val result = withContext(Dispatchers.Default) {
-                            ResourcesLoaderBench(num = 100).load()
+                            ResourcesLoaderBench(num = 500).load()
                         }
                         resourcesText = result.toString()
                     } catch (t: Throwable) {
