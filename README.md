@@ -26,16 +26,20 @@ basic raw data:
   * resources: ~40ms
   * classes: ~4ms
 * Real Pixel 7
-  * resources: ~76ms
+  * resources: ~92ms
   * classes: ~11ms
 
+Loading classes is consistently faster, by nearly an order of magnitude. 
+See caveats about this below...
 
 ## warnings/caveats
 
 * This is a very basic/stupid benchmark. There are tons of factors that have not been accounted for.
+* Environmental factors will impact the results. 
 * Caching: Each button should only be used once per application load. The data will be aggressively
   cached by the system, so subsequent clicks will be faster. The app should be closed between
   attempts.
 * Speculation: it's possible that the parsing and creation of Properties instances is more expensive
   than necessary. Simply reading a text value instead of a property value might be faster. 
   Feel free to test this theory.
+* Might be interesting to try with 10x the files?
