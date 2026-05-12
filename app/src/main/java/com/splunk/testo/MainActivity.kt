@@ -1,9 +1,11 @@
 package com.splunk.testo
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +26,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
@@ -48,6 +52,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val logoBitmap = remember(context) {
+        context.assets.open("logo.png").use { inputStream ->
+            BitmapFactory.decodeStream(inputStream)?.asImageBitmap()
+        }
+    }
     var resourcesText by remember { mutableStateOf("") }
     var classesText by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -70,10 +80,20 @@ fun MainScreen(modifier: Modifier = Modifier) {
     }
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(top = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        if (logoBitmap != null) {
+            Image(
+                bitmap = logoBitmap,
+                contentDescription = "App logo",
+                modifier = Modifier.sizeIn(maxWidth = 160.dp, maxHeight = 160.dp)
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+        }
         Button(
             enabled = !isResourcesLoading,
             onClick = {
