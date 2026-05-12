@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -47,9 +48,24 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(modifier: Modifier = Modifier) {
     var resourcesText by remember { mutableStateOf("") }
     var classesText by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     var isResourcesLoading by remember { mutableStateOf(false) }
     var isClassesLoading by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+
+    if (errorMessage != null) {
+        AlertDialog(
+            onDismissRequest = { errorMessage = null },
+            confirmButton = {
+                Button(onClick = { errorMessage = null }) {
+                    Text("OK")
+                }
+            },
+            title = { Text("Benchmark Failed") },
+            text = { Text(errorMessage!!) }
+        )
+
+    }
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -61,11 +77,16 @@ fun MainScreen(modifier: Modifier = Modifier) {
             onClick = {
                 coroutineScope.launch {
                     isResourcesLoading = true
-                    val result = withContext(Dispatchers.Default) {
-                        ResourcesLoaderBench().load()
+                    try {
+                        val result = withContext(Dispatchers.Default) {
+                            ResourcesLoaderBench(num = 100).load()
+                        }
+                        resourcesText = result.toString()
+                    } catch (t: Throwable) {
+                        errorMessage = t.message ?: t.toString()
+                    } finally {
+                        isResourcesLoading = false
                     }
-                    resourcesText = result.toString()
-                    isResourcesLoading = false
                 }
             },
             modifier = Modifier.sizeIn(minWidth = 204.dp, minHeight = 82.dp)
@@ -82,11 +103,16 @@ fun MainScreen(modifier: Modifier = Modifier) {
             onClick = {
                 coroutineScope.launch {
                     isClassesLoading = true
-                    val result = withContext(Dispatchers.Default) {
-                        ClassesLoaderBench().load()
+                    try {
+                        val result = withContext(Dispatchers.Default) {
+                            ClassesLoaderBench().load()
+                        }
+                        classesText = result.toString()
+                    } catch (t: Throwable) {
+                        errorMessage = t.message ?: t.toString()
+                    } finally {
+                        isClassesLoading = false
                     }
-                    classesText = result.toString()
-                    isClassesLoading = false
                 }
             },
             modifier = Modifier.sizeIn(minWidth = 204.dp, minHeight = 82.dp)
